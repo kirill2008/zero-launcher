@@ -1,19 +1,28 @@
 name: release
 
-# Новая версия: поднять appVersion в util.go, дописать раздел в CHANGELOG.md, затем
-#   git tag v2.0.3 && git push origin v2.0.3
-# Этот workflow соберёт ZeroLauncher.exe и выложит его на странице Releases.
+# Выпуск версии — один из двух способов:
+#   1) Actions → release → Run workflow: тег vX.Y.Z создаётся сам по appVersion из util.go;
+#   2) git tag v2.0.3 && git push origin v2.0.3 — тег должен совпадать с appVersion.
+# Перед этим: поднять appVersion в util.go и дописать раздел в CHANGELOG.md.
+# Workflow соберёт ZeroLauncher.exe и выложит его на странице Releases.
 
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: windows-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
 
@@ -21,14 +30,25 @@ jobs:
         with:
           go-version: stable
 
-      - name: Версия в util.go совпадает с тегом
+      - name: Версия
         shell: bash
         run: |
           v=$(sed -n 's/^const appVersion = "\(.*\)"$/\1/p' util.go)
-          if [ "v$v" != "$GITHUB_REF_NAME" ]; then
-            echo "::error::В util.go appVersion = $v, а тег $GITHUB_REF_NAME"
+          if [ -z "$v" ]; then
+            echo "::error::Не найден appVersion в util.go"
             exit 1
           fi
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            if [ "v$v" != "$GITHUB_REF_NAME" ]; then
+              echo "::error::В util.go appVersion = $v, а тег $GITHUB_REF_NAME"
+              exit 1
+            fi
+          elif gh release view "v$v" >/dev/null 2>&1; then
+            echo "::error::Версия $v уже выпущена. Поднимите appVersion в util.go и допишите CHANGELOG.md"
+            exit 1
+          fi
+          echo "VERSION=$v" >> "$GITHUB_ENV"
+          echo "TAG=v$v" >> "$GITHUB_ENV"
 
       - name: Тесты Windows
         run: go test -count=1 -run "^TestWin" ./...
@@ -45,8 +65,7 @@ jobs:
       - name: Описание релиза
         shell: bash
         run: |
-          v="${GITHUB_REF_NAME#v}"
-          awk -v v="$v" '
+          awk -v v="$VERSION" '
             $0 == "## " v { f = 1; next }
             /^## / { f = 0 }
             f
@@ -63,12 +82,14 @@ jobs:
 
       - name: Публикация
         shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" ZeroLauncher.exe ZeroLauncher.exe.sha256 --clobber
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            # релиз уже создан вручную на сайте — добавляем файлы, пустое описание заполняем
+            gh release upload "$TAG" ZeroLauncher.exe ZeroLauncher.exe.sha256 --clobber
+            if [ -z "$(gh release view "$TAG" --json body --jq .body)" ]; then
+              gh release edit "$TAG" --notes-file notes.md
+            fi
           else
-            gh release create "$GITHUB_REF_NAME" ZeroLauncher.exe ZeroLauncher.exe.sha256 \
-              --title "Zero Launcher ${GITHUB_REF_NAME#v}" --notes-file notes.md --verify-tag
+            gh release create "$TAG" ZeroLauncher.exe ZeroLauncher.exe.sha256 \
+              --title "Zero Launcher $VERSION" --notes-file notes.md --target "$GITHUB_SHA"
           fi

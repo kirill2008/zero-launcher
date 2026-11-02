@@ -190,13 +190,16 @@ go test -run "^TestWin" ./...   # только на Windows: реестр, се�
 
 1. Поднимите `appVersion` в `util.go` и версию в `tools/make_icon.py`, затем пересоберите ресурсы: `python tools/make_icon.py`.
 2. Допишите раздел `## X.Y.Z` в [CHANGELOG.md](CHANGELOG.md).
-3. Отправьте коммит и тег:
-   ```
-   git tag v2.0.3
-   git push origin main v2.0.3
-   ```
+3. Отправьте коммит в `main`.
+4. Выпустите версию одним из способов:
+   - на GitHub: **Actions → release → Run workflow** — тег `vX.Y.Z` создастся сам по `appVersion`;
+   - или тегом из командной строки:
+     ```
+     git tag v2.0.3
+     git push origin v2.0.3
+     ```
 
-`.github/workflows/release.yml` проверит, что тег совпадает с `appVersion`, прогонит тесты на Windows, соберёт `ZeroLauncher.exe` и выложит его на странице Releases вместе с SHA-256 и описанием из CHANGELOG.
+`.github/workflows/release.yml` сверит версию, прогонит тесты на Windows, соберёт `ZeroLauncher.exe` и выложит его на странице Releases вместе с SHA-256 и описанием из CHANGELOG. Если версия с таким номером уже выпущена, запуск кнопкой остановится с подсказкой поднять `appVersion`.
 
 ## Лицензия
 
