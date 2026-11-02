@@ -1,0 +1,74 @@
+name: release
+
+# Новая версия: поднять appVersion в util.go, дописать раздел в CHANGELOG.md, затем
+#   git tag v2.0.3 && git push origin v2.0.3
+# Этот workflow соберёт ZeroLauncher.exe и выложит его на странице Releases.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+
+      - name: Версия в util.go совпадает с тегом
+        shell: bash
+        run: |
+          v=$(sed -n 's/^const appVersion = "\(.*\)"$/\1/p' util.go)
+          if [ "v$v" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::В util.go appVersion = $v, а тег $GITHUB_REF_NAME"
+            exit 1
+          fi
+
+      - name: Тесты Windows
+        run: go test -count=1 -run "^TestWin" ./...
+
+      - name: Сборка
+        run: go build -trimpath -ldflags "-H windowsgui" -o ZeroLauncher.exe .
+
+      - name: Контрольная сумма
+        shell: pwsh
+        run: |
+          $h = (Get-FileHash ZeroLauncher.exe -Algorithm SHA256).Hash.ToLower()
+          "$h  ZeroLauncher.exe" | Out-File -Encoding ascii ZeroLauncher.exe.sha256
+
+      - name: Описание релиза
+        shell: bash
+        run: |
+          v="${GITHUB_REF_NAME#v}"
+          awk -v v="$v" '
+            $0 == "## " v { f = 1; next }
+            /^## / { f = 0 }
+            f
+          ' CHANGELOG.md > notes.md
+          cat >> notes.md <<'EOF'
+
+          ### Как установить
+
+          Скачайте `ZeroLauncher.exe` ниже, положите в любую папку и запустите. Python и другие программы не нужны.
+
+          Файл не подписан, поэтому Windows может показать «Система Windows защитила ваш компьютер». Нажмите «Подробнее», затем «Выполнить в любом случае». Контрольная сумма SHA-256 — в файле `ZeroLauncher.exe.sha256`.
+          EOF
+          cat notes.md
+
+      - name: Публикация
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" ZeroLauncher.exe ZeroLauncher.exe.sha256 --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" ZeroLauncher.exe ZeroLauncher.exe.sha256 \
+              --title "Zero Launcher ${GITHUB_REF_NAME#v}" --notes-file notes.md --verify-tag
+          fi

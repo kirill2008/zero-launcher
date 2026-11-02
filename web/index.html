@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b0a1d">
+  <title>Zero Launcher</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="zGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd84a"/><stop offset=".55" stop-color="#ff9a1f"/><stop offset="1" stop-color="#ff6a00"/></linearGradient>
+    </defs>
+    <symbol id="logo-z" viewBox="0 0 48 48"><path fill="url(#zGrad)" d="M11 6h33l-3.2 7.4L22.6 33.5H39L35.8 41H3l3.2-7.4L24.4 13.5H7.8z"/><path fill="url(#zGrad)" opacity=".92" d="M13.2 21.6h22.6l-1.6 4H11.6z"/></symbol>
+    <symbol id="i-gamepad" viewBox="0 0 24 24"><path d="M7.6 7.5h8.8a4.6 4.6 0 0 1 4.5 3.7l.9 4.7a2.6 2.6 0 0 1-4.6 2.1l-1.7-2.3H8.5l-1.7 2.3a2.6 2.6 0 0 1-4.6-2.1l.9-4.7a4.6 4.6 0 0 1 4.5-3.7z"/><path d="M8.2 10.3v3.4M6.5 12h3.4"/><path d="M15.6 11.2h.1M17.6 12.9h.1"/></symbol>
+    <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M14.4 4.6c2.6-1.1 4.8-1 5.5-.5.5.7.6 2.9-.5 5.5-1 2.6-3.4 5.3-6.6 7.2l-3.6-3.6c1.9-3.2 4.6-5.6 7.2-6.6z"/><path d="M9.3 13.1 6 12.6l2.4-3.2 3.3-.3M10.9 14.7l.5 3.3 3.2-2.4.3-3.3"/><path d="M6.5 15.6c-1.3.4-2.2 1.9-2.1 4 2.1.1 3.6-.8 4-2.1"/><circle cx="15.5" cy="8.5" r="1.4"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.5a7.7 7.7 0 0 0 0-3l2-1.6-2-3.4-2.4.9a7.6 7.6 0 0 0-2.6-1.5L14 2.4h-4l-.4 2.5A7.6 7.6 0 0 0 7 6.4l-2.4-.9-2 3.4 2 1.6a7.7 7.7 0 0 0 0 3l-2 1.6 2 3.4 2.4-.9a7.6 7.6 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.6 7.6 0 0 0 2.6-1.5l2.4.9 2-3.4z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.8-4.6-7.8-10.3A4.4 4.4 0 0 1 12 7.1a4.4 4.4 0 0 1 7.8 2.6C19.8 15.4 12 20 12 20z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.8"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><path d="M4.6 6.5h.1M4.6 12h.1M4.6 17.5h.1"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.6v.1"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13.5 2.5 5.5 13.5h6l-1 8 8-11h-6z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path class="fill" d="M7.5 4.8v14.4L19.5 12z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.2 19 6v5.6c0 4.3-3 7.6-7 9.1-4-1.5-7-4.8-7-9.1V6z"/><path d="m8.8 12 2.3 2.3 4.3-4.4"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle class="fill" cx="12" cy="5.5" r="1.7"/><circle class="fill" cx="12" cy="12" r="1.7"/><circle class="fill" cx="12" cy="18.5" r="1.7"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m14.5 6-6 6 6 6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9.5 6 6 6-6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-6"/></symbol>
+    <symbol id="i-bars" viewBox="0 0 24 24"><path d="M5 19.5v-5M10 19.5V9.5M15 19.5v-7M20 19.5v-14"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3.5 7a2 2 0 0 1 2-2h4l2 2h7a2 2 0 0 1 2 2v8.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="12" rx="2"/><path d="M8.5 20h7M12 16.5V20"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5.5 12.5 4 4 9-9"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M7 12h10"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 7.5v6M12 16.8v.1"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9.5" rx="2"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect x="4" y="4.5" width="16" height="6" rx="1.6"/><rect x="4" y="13.5" width="16" height="6" rx="1.6"/><path d="M7.5 7.5h.1M7.5 16.5h.1"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M19.5 11A7.6 7.6 0 0 0 6 6.6L4.5 8M4.5 4v4h4"/><path d="M4.5 13A7.6 7.6 0 0 0 18 17.4l1.5-1.4M19.5 20v-4h-4"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/><path d="M10.5 7.5v6M7.5 10.5h6"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="9.5" r="1.8"/><path d="m4 17.5 5-5 4 4 2.5-2.5 4.5 4.5"/></symbol>
+  </svg>
+
+  <div class="app" id="app">
+    <header class="topbar">
+      <a class="brand" href="#" data-view="home" aria-label="Zero Launcher — главная">
+        <svg class="brand-logo" aria-hidden="true"><use href="#logo-z"/></svg><span>Zero Launcher</span>
+      </a>
+      <nav class="topnav" id="topnav" aria-label="Разделы">
+        <button class="nav-tab" data-view="home" data-group="library"><svg class="ico"><use href="#i-gamepad"/></svg><span>Библиотека</span></button>
+        <button class="nav-tab" data-view="launchers"><svg class="ico"><use href="#i-rocket"/></svg><span>Лаунчеры</span></button>
+        <button class="nav-tab" data-view="settings"><svg class="ico"><use href="#i-gear"/></svg><span>Настройки</span></button>
+        <div class="mobile-only mobile-links">
+          <button class="nav-tab" data-view="favorites"><svg class="ico"><use href="#i-heart"/></svg><span>Избранное</span></button>
+          <button class="nav-tab" data-view="recent"><svg class="ico"><use href="#i-clock"/></svg><span>Последние</span></button>
+          <button class="nav-tab" data-view="all"><svg class="ico"><use href="#i-grid"/></svg><span>Все игры</span></button>
+          <button class="nav-tab" data-view="about"><svg class="ico"><use href="#i-info"/></svg><span>О программе</span></button>
+        </div>
+      </nav>
+      <label class="search-box"><svg class="ico"><use href="#i-search"/></svg><input id="globalSearch" type="search" placeholder="Поиск игр…" aria-label="Поиск игр и лаунчеров" autocomplete="off"></label>
+      <button class="mobile-menu" id="mobileMenu" aria-label="Меню" aria-expanded="false" aria-controls="topnav"><svg class="ico"><use href="#i-menu"/></svg></button>
+    </header>
+
+    <aside class="sidebar" aria-label="Библиотека">
+      <nav class="side-nav">
+        <button class="side-link" data-view="home"><svg class="ico"><use href="#i-gamepad"/></svg><span>Главная</span><b class="badge" id="badgeAll">0</b></button>
+        <button class="side-link" data-view="favorites"><svg class="ico"><use href="#i-heart"/></svg><span>Избранное</span><b class="badge soft hidden" id="badgeFav">0</b></button>
+        <button class="side-link" data-view="recent"><svg class="ico"><use href="#i-clock"/></svg><span>Последние</span></button>
+        <button class="side-link" data-view="all"><svg class="ico"><use href="#i-grid"/></svg><span>Все игры</span></button>
+        <button class="side-link" data-view="settings"><svg class="ico"><use href="#i-gear"/></svg><span>Настройки</span></button>
+        <button class="side-link" data-view="about"><svg class="ico"><use href="#i-info"/></svg><span>О программе</span></button>
+      </nav>
+      <div class="side-status" id="sideStatus" role="status">
+        <svg class="ico"><use href="#i-bolt"/></svg>
+        <b id="sideStatusTitle">Загрузка…</b>
+        <small id="sideStatusText">Подключение к Zero Launcher</small>
+      </div>
+    </aside>
+
+    <main class="main" id="main">
+      <section class="hero" id="hero" aria-label="Выбранная игра"></section>
+      <header class="page-head hidden" id="pageHead"></header>
+      <section class="library" id="library" aria-label="Игры">
+        <div class="lib-controls" id="libControls">
+          <div class="filter-pills" id="filterPills" role="group" aria-label="Платформа"></div>
+          <div class="lib-tools">
+            <label class="select-wrap"><select id="sortSelect" aria-label="Сортировка">
+              <option value="popular">По популярности</option>
+              <option value="recent">Недавние</option>
+              <option value="name">По названию</option>
+              <option value="added">Новые в библиотеке</option>
+            </select><svg class="ico"><use href="#i-down"/></svg></label>
+            <div class="view-toggle" role="group" aria-label="Вид библиотеки">
+              <button id="viewGrid" data-mode="grid" aria-label="Сетка" title="Сетка"><svg class="ico"><use href="#i-grid"/></svg></button>
+              <button id="viewList" data-mode="list" aria-label="Список" title="Список"><svg class="ico"><use href="#i-list"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <div class="game-grid" id="gameGrid" aria-live="polite"></div>
+        <div class="empty-state hidden" id="emptyState"></div>
+        <div class="journal hidden" id="journal"></div>
+      </section>
+      <section class="page hidden" id="launchersView" aria-label="Лаунчеры"><div class="launcher-list" id="launcherList"></div></section>
+      <section class="page hidden" id="settingsView" aria-label="Настройки"><div class="settings-grid" id="settingsGrid"></div></section>
+      <section class="page hidden" id="aboutView" aria-label="О программе"></section>
+    </main>
+
+    <aside class="rail" aria-label="Состояние и действия">
+      <section class="rail-card" aria-labelledby="sysTitle">
+        <h2 id="sysTitle">Статус системы</h2>
+        <div class="sys-state" id="sysState"><i></i><span>Загрузка…</span></div>
+        <ul class="sys-launchers" id="sysLaunchers"></ul>
+        <div class="sys-time" title="Среднее время от нажатия «Запустить» до появления игры, по последним запускам">
+          <svg class="ico"><use href="#i-bolt"/></svg><span>Время запуска</span><b id="avgLaunch">—</b>
+        </div>
+      </section>
+      <section class="rail-card" aria-labelledby="qaTitle">
+        <h2 id="qaTitle">Быстрые действия</h2>
+        <div class="quick-actions">
+          <button class="qa primary" id="qaLaunch"><svg class="ico"><use href="#i-rocket"/></svg><span>Быстрый запуск</span></button>
+          <button class="qa" id="qaAdd"><svg class="ico"><use href="#i-plus"/></svg><span>Добавить игру</span></button>
+          <button class="qa" id="qaSettings"><svg class="ico"><use href="#i-gear"/></svg><span>Настройки</span></button>
+          <button class="qa" id="qaCheck"><svg class="ico"><use href="#i-shield"/></svg><span>Проверить файлы</span></button>
+        </div>
+      </section>
+    </aside>
+
+    <footer class="statusbar">
+      <div class="status-left" id="statusLeft"><svg class="ico"><use href="#i-bars"/></svg><span id="statusText">Загрузка библиотеки…</span></div>
+      <div class="status-right"><svg class="ico"><use href="#i-bolt"/></svg><span>Zero Launcher v<span id="appVersion">—</span></span></div>
+    </footer>
+  </div>
+
+  <div class="menu hidden" id="menu" role="menu"></div>
+  <div class="modal-backdrop hidden" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+    <section class="modal-panel" id="drawerPanel"></section>
+  </div>
+  <div class="dialog-backdrop hidden" id="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dialogTitle">
+    <section class="dialog-panel" id="dialogPanel"></section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

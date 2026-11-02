@@ -1,0 +1,19 @@
+# Сборка
+/dist/
+*.exe
+*.test
+*.out
+/ignite
+/zero-launcher
+
+# Python (tools/make_icon.py)
+__pycache__/
+*.pyc
+
+# Редакторы и система
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini

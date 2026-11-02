@@ -1,0 +1,34 @@
+name: test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: go vet ./...
+      - run: GOOS=windows go vet ./...
+      - run: go test -race -count=1 -cover ./...
+
+  windows:
+    # Реестр, запись сервера RAGE MP, процессы, ярлыки и иконки — на настоящей Windows.
+    # Остальные тесты рассчитаны на поддельную файловую систему и гоняются в linux.
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: go test -count=1 -v -run "^TestWin" ./...
+      - run: go build -trimpath -ldflags "-H windowsgui" -o ZeroLauncher.exe .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ZeroLauncher
+          path: ZeroLauncher.exe
