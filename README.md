@@ -5,7 +5,7 @@
 ![Windows 10 и 11](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D6)
 [![Лицензия MIT](https://img.shields.io/badge/%D0%BB%D0%B8%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F-MIT-green)](LICENSE)
 
-**[⬇ Скачать ZeroLauncher.exe](https://github.com/kirill2008/zero-launcher/releases/latest)**
+**[⬇ Скачать ZeroLauncher.exe](https://github.com/kirill2008/zero-launcher/releases/latest/download/ZeroLauncher.exe)** · [все версии](https://github.com/kirill2008/zero-launcher/releases)
 
 ![Главная Zero Launcher](docs/home.webp)
 
